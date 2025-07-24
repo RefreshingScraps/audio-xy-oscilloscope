@@ -1,0 +1,138 @@
+# ===================================
+# 合并优化版 MSVC/CMake/Qt 项目 .gitignore
+# ===================================
+
+###########################
+# 编译输出和构建目录
+###########################
+# 通用构建目录
+[Bb]uild*/
+[Oo]bj*/
+[Oo]ut/
+[Xx]64/
+[Xx]86/
+[Ww]in32/
+[Dd]ebug/
+[Rr]elease/
+*build-*   # Qt 特定构建目录
+
+# 可执行文件和库
+Executable/*
+*.exe
+*.dll
+*.so
+*.so.*
+*.dylib
+*.lib
+*.a
+*.la
+*.lai
+*.slo
+*.lo
+*.o
+*.exp
+*.ilk
+*.pdb
+*.iobj
+*.ipdb
+*.bsc
+
+# Qt 编译中间文件
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+*_qmlcache.qrc
+*_plugin_import.cpp
+object_script.*.Release
+object_script.*.Debug
+target_wrapper.*  # Qt 单元测试
+
+###########################
+# CMake 生成文件
+###########################
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+*.cmake
+compile_commands.json  # 编译数据库
+
+# CMake 用户文件
+CMakeLists.txt.user*
+*.user
+*.user.*
+*.vcxproj.user
+*.vcxproj.filters
+
+###########################
+# IDE 和编辑器文件
+###########################
+# Visual Studio
+.vs/
+*.vcxproj*
+*.sln
+*.filters
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+
+# Qt Creator
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.qmlproject.user
+*.qmlproject.user.*
+*creator.user*
+*.autosave
+
+# VSCode 和其他
+.vscode/
+.idea/
+
+###########################
+# Qt 项目文件
+###########################
+/.qmake.cache
+/.qmake.stash
+*.prl
+*.qm
+Makefile*  # Qt 生成的 Makefile
+
+###########################
+# 运行时和临时文件
+###########################
+*.log
+*.tlog
+*.lastbuildstate
+*.stackdump
+*.cache
+*.manifest
+*.res
+*.aps
+*.db
+*.idb
+*.pch
+code.txt
+
+###########################
+# 脚本和备份文件
+###########################
+*.ps1
+*.*sh
+*.py
+*.bak
+
+###########################
+# 系统文件
+###########################
+Thumbs.db
+.DS_Store
