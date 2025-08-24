@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     audioClient(nullptr), captureClient(nullptr),
     isCapturing(false), deviceFormat(nullptr), bufferFrameCount(0)
 {
-    resize(800, 600);
+    resize(360, 360);
     setWindowTitle("XYOscilloscope-made by linux-rm");
 
     // Initialize COM library
@@ -375,15 +375,15 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
     painter.setPen(Qt::white);
     painter.setFont(QFont("Arial", 9));
-    painter.drawText(20, 30, QString("点数:%1, 反相 X:%2,Y:%3").arg(points.size()).arg(TX).arg(TY));
+    painter.drawText(0, 10, QString("点数:%1, 反相 X:%2,Y:%3").arg(points.size()).arg(TX).arg(TY));
 
     // Display audio format information
     if (deviceFormat) {
-        painter.drawText(20, 50, "音频格式: " + formatToString(deviceFormat));
+        painter.drawText(0, 25, "音频格式: " + formatToString(deviceFormat));
     }
 
     // 显示延迟信息
-    painter.drawText(20, 70, QString("缓冲区大小: %1 帧").arg(bufferFrameCount));
+    painter.drawText(0, 40, QString("缓冲区大小: %1 帧").arg(bufferFrameCount));
 }
 
 void MainWindow::showError(const QString &message)
