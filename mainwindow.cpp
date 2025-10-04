@@ -7,10 +7,11 @@ DEFINE_GUID(KSDATAFORMAT_SUBTYPE_IEEE_FLOAT,0x00000003, 0x0000, 0x0010, 0x80, 0x
 #endif
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), deviceEnumerator(nullptr), device(nullptr),audioClient(nullptr), captureClient(nullptr),isCapturing(false), deviceFormat(nullptr)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
     setAttribute(Qt::WA_TransparentForMouseEvents, true);
     setAttribute(Qt::WA_TranslucentBackground);
-    setGeometry(QApplication::primaryScreen()->geometry().width() - width() - 50, 50, 360, 360);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::ToolTip | Qt::WindowDoesNotAcceptFocus);
+    setFocusPolicy(Qt::NoFocus);
+    setGeometry(QApplication::primaryScreen()->geometry().width() - 410, 50, 360, 360);
     CoInitialize(nullptr);
     HRESULT hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&deviceEnumerator);
     if (FAILED(hr)) {
