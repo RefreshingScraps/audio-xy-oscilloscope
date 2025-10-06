@@ -9,16 +9,15 @@
 #include <windows.h>
 #include <mmdeviceapi.h>
 #include <audioclient.h>
-#include <QPainter>
-#include <QMouseEvent>
-#include <QKeyEvent>
-#include <thread>
-#include <QMessageBox>
-#include <QElapsedTimer>
-#include <QApplication>
+#include <functiondiscoverykeys_devpkey.h>
 #define TX 1
 #define TY 1
 #define KEEPPOINT 2000
+QT_BEGIN_NAMESPACE
+namespace Ui {
+class MainWindow;
+}
+QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -27,7 +26,14 @@ public:
     ~MainWindow();
 protected:
     void paintEvent(QPaintEvent *event) override;
+private slots:
+    void updateDisplay(){update();}
 private:
+    void initializeAudio();
+    void showError(const QString &message);
+    void captureAudio();
+    QString formatToString(const WAVEFORMATEX *pwfx);
+    bool convertToPCM16(const BYTE *pData, UINT32 numFrames, WAVEFORMATEX *pwfx);
     QVector<QPointF> points;
     QTimer *updateTimer;
     IMMDeviceEnumerator *deviceEnumerator;
@@ -36,5 +42,6 @@ private:
     IAudioCaptureClient *captureClient;
     bool isCapturing;
     WAVEFORMATEX *deviceFormat;
+    UINT32 bufferFrameCount;
 };
 #endif
