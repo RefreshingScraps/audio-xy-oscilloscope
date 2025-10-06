@@ -25,7 +25,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v6.0.0
   
-    - name: Package Application
+    - name: Use pep517
       run: |
         pip config set global.use-pep517 true	
       
@@ -41,7 +41,7 @@ jobs:
     - name: Configure and Build
       run: |
         qmake
-        nmake  # 在Linux/macOS上使用 make
+        cmake  # 在Linux/macOS上使用 make
 
     - name: Package Application
       id: package
