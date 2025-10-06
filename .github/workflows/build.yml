@@ -68,7 +68,7 @@ jobs:
         windeployqt --qmldir . ${env:archiveName}\${env:targetName}
         
         # 打包为ZIP [citation:1]
-        Compress-Archive -Path ${env:archiveName} -DestinationPath ${env:archiveName}.zip
+        Compress-Archive -Path ${env:archiveName} -DestinationPath a.zip
         
         # 设置输出变量供后续步骤使用
         echo "package_name=$env:archiveName.zip" >> $env:GITHUB_OUTPUT
