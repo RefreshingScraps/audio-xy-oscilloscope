@@ -16,7 +16,7 @@ jobs:
       matrix:
         qt_ver: [6.8.3]
         qt_target: [desktop]
-        qt_arch: [win64_msvc2022_64, win32_msvc2022]
+        qt_arch: [win64_msvc2022_64]
     
     steps:
     - name: Checkout code
