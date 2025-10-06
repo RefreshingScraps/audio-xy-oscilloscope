@@ -40,8 +40,7 @@ jobs:
 
     - name: Configure and Build
       run: |
-        qmake
-        cmake  # 在Linux/macOS上使用 make
+        cmake D:\a\audio-xy-oscilloscope\audio-xy-oscilloscope # 在Linux/macOS上使用 make
 
     - name: Package Application
       id: package
