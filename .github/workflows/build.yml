@@ -1,0 +1,70 @@
+name: Build and Package Qt Application
+
+on:
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Package
+    runs-on: windows-latest  # 也可以使用 ubuntu-latest 或 macos-latest
+    
+    strategy:
+      matrix:
+        qt_ver: [5.15.2]
+        qt_target: [desktop]
+        qt_arch: [win64_msvc2019_64]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: ${{ matrix.qt_ver }}
+        target: ${{ matrix.qt_target }}
+        arch: ${{ matrix.qt_arch }}
+
+    - name: Configure and Build
+      run: |
+        qmake
+        nmake  # 在Linux/macOS上使用 make
+
+    - name: Package Application
+      id: package
+      shell: pwsh
+      env:
+        VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
+        archiveName: MyQtApp-${{ github.ref_name }}-${{ matrix.qt_arch }}
+        targetName: YourAppName.exe  # 替换为你的可执行文件名
+      run: |
+        # 创建发布目录
+        New-Item -ItemType Directory -Path ${env:archiveName} -Force
+        
+        # 拷贝可执行文件
+        Copy-Item release\${env:targetName} ${env:archiveName}\
+        
+        # 使用windeployqt收集依赖（Windows）[citation:1]
+        windeployqt --qmldir . ${env:archiveName}\${env:targetName}
+        
+        # 打包为ZIP [citation:1]
+        Compress-Archive -Path ${env:archiveName} -DestinationPath ${env:archiveName}.zip
+        
+        # 设置输出变量供后续步骤使用
+        echo "package_name=$env:archiveName.zip" >> $env:GITHUB_OUTPUT
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.package.outputs.package_name }}
+        path: ${{ steps.package.outputs.package_name }}
+
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ steps.package.outputs.package_name }}
