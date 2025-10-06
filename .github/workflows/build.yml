@@ -71,7 +71,7 @@ jobs:
         Compress-Archive -Path ${env:archiveName} -DestinationPath a.zip
         
         # 设置输出变量供后续步骤使用
-        echo "package_name=$env:archiveName.zip" >> $env:GITHUB_OUTPUT
+        echo "package_name=a.zip" >> $env:GITHUB_OUTPUT
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
