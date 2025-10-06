@@ -41,14 +41,18 @@ jobs:
     - name: Configure and Build
       run: |
         cmake D:\a\audio-xy-oscilloscope\audio-xy-oscilloscope # 在Linux/macOS上使用 make
-
+        
+    - name: Look the XYOscilloscope
+      run: |
+        dir -s
+        
     - name: Package Application
       id: package
       shell: pwsh
       env:
         VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC'
         archiveName: MyQtApp-${{ github.ref_name }}-${{ matrix.qt_arch }}
-        targetName: YourAppName.exe  # 替换为你的可执行文件名
+        targetName: XYOscilloscope.exe  # 替换为你的可执行文件名
       run: |
         # 创建发布目录
         New-Item -ItemType Directory -Path ${env:archiveName} -Force
