@@ -49,10 +49,6 @@ jobs:
       run: |
         cmake --build build --config Release
         
-    - name: Look the XYOscilloscope
-      run: |
-        dir -s
-        
     - name: Package Application
       id: package
       shell: pwsh
@@ -71,10 +67,10 @@ jobs:
         windeployqt --qmldir . ${env:archiveName}\${env:targetName}
         
         # 打包为ZIP [citation:1]
-        Compress-Archive -Path ${env:archiveName} -DestinationPath a.zip
+        Compress-Archive -Path ${env:archiveName} -DestinationPath Release.zip
         
         # 设置输出变量供后续步骤使用
-        echo "package_name=a.zip" >> $env:GITHUB_OUTPUT
+        echo "package_name=Release.zip" >> $env:GITHUB_OUTPUT
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
