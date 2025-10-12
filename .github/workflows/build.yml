@@ -54,7 +54,7 @@ jobs:
       shell: pwsh
       env:
         VCINSTALLDIR: 'C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\VC'
-        archiveName: MyQtApp-${{ github.ref_name }}-${{ matrix.qt_arch }}
+        archiveName: XYOscilloscope-${{ github.ref_name }}-${{ matrix.qt_arch }}
         targetName: XYOscilloscope.exe  # 替换为你的可执行文件名
       run: |
         # 创建发布目录
@@ -66,16 +66,13 @@ jobs:
         # 使用windeployqt收集依赖（Windows）[citation:1]
         windeployqt --qmldir . ${env:archiveName}\${env:targetName}
         
-        # 打包为ZIP [citation:1]
-        Compress-Archive -Path ${env:archiveName} -DestinationPath Release.zip
-        
         # 设置输出变量供后续步骤使用
-        echo "package_name=Release.zip" >> $env:GITHUB_OUTPUT
+        echo "package_name=${env:archiveName}.zip" >> $env:GITHUB_OUTPUT
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ steps.package.outputs.package_name }}
+        name: ${{ steps.package.outputs.package_name }}.zip
         path: ${{ steps.package.outputs.package_name }}
 
     - name: Create Release
